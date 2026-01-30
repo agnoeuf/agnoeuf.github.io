@@ -21,7 +21,7 @@ export default defineConfig({
         },
 
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/agnoeuf' }
+            { icon: 'github', link: 'https://github.com/agnoeuf/agnoeuf.github.io' }
         ]
     }
 })
