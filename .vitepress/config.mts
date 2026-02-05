@@ -44,7 +44,7 @@ export default defineConfig({
         `]
     ],
     transformHtml(code, id, { siteConfig }) {
-        const pages = new Set(siteConfig.pages);
+        const pages = new Set(siteConfig.pages.map(p => p.replace(/\\/g, '/')));
         const srcDir = siteConfig.srcDir.replace(/\\/g, '/');
         const currentFile = id.replace(/\\/g, '/');
 
@@ -62,7 +62,14 @@ export default defineConfig({
             // 跳过外部链接、协议链接、纯锚点
             if (/^(https?:|mailto:|tel:|#)/.test(href)) return match;
 
+            // 跳过导航栏和侧边栏的链接，避免误标红
+            if (match.includes('VPNavBar') || match.includes('VPSidebar') || match.includes('nav-link')) return match;
+
             let cleanHref = href.split('#')[0].split('?')[0];
+            try {
+                cleanHref = decodeURIComponent(cleanHref);
+            } catch (e) { }
+
             if (cleanHref.endsWith('.html')) cleanHref = cleanHref.slice(0, -5);
 
             let targetPath = '';
