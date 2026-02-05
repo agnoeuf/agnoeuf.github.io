@@ -6,6 +6,71 @@ export default defineConfig({
     title: "羊油蛋服务器 Wiki",
     description: "A wiki site for Agnoeuf",
     ignoreDeadLinks: true,
+    head: [
+        ['style', {}, `
+            .dead-link { 
+                color: #f43f5e !important; 
+                text-decoration: underline dashed; 
+            }
+            .dead-link:hover {
+                color: #fb7185 !important;
+            }
+        `]
+    ],
+    transformHtml(code, id, { siteConfig }) {
+        const pages = new Set(siteConfig.pages);
+        const srcDir = siteConfig.srcDir.replace(/\\/g, '/');
+        const currentFile = id.replace(/\\/g, '/');
+
+        // 计算当前处理文件相对于 srcDir 的目录
+        let currentRelativeDir = '';
+        if (currentFile.startsWith(srcDir)) {
+            const relPath = currentFile.slice(srcDir.length).replace(/^\//, '');
+            const lastSlash = relPath.lastIndexOf('/');
+            if (lastSlash !== -1) {
+                currentRelativeDir = relPath.substring(0, lastSlash);
+            }
+        }
+
+        return code.replace(/<a\s+[^>]*href="([^"]+)"[^>]*>/g, (match, href) => {
+            // 跳过外部链接、协议链接、纯锚点
+            if (/^(https?:|mailto:|tel:|#)/.test(href)) return match;
+
+            let cleanHref = href.split('#')[0].split('?')[0];
+            if (cleanHref.endsWith('.html')) cleanHref = cleanHref.slice(0, -5);
+
+            let targetPath = '';
+            if (cleanHref.startsWith('/')) {
+                targetPath = cleanHref.slice(1);
+            } else {
+                // 处理相对路径
+                const base = currentRelativeDir ? currentRelativeDir.split('/') : [];
+                const relative = cleanHref.split('/');
+                const stack = [...base];
+                for (const seg of relative) {
+                    if (seg === '..') stack.pop();
+                    else if (seg !== '.' && seg !== '') stack.push(seg);
+                }
+                targetPath = stack.join('/');
+            }
+
+            if (targetPath === '' || targetPath === 'index') return match;
+
+            // 检查 MD 文件是否存在
+            const possiblePaths = [
+                targetPath.endsWith('/') ? `${targetPath}index.md` : `${targetPath}.md`,
+                targetPath.endsWith('/') ? `${targetPath}index.md` : `${targetPath}/index.md`
+            ];
+
+            const exists = possiblePaths.some(p => pages.has(p));
+            if (!exists) {
+                return match.includes('class="')
+                    ? match.replace('class="', 'class="dead-link ')
+                    : match.replace('<a ', '<a class="dead-link" ');
+            }
+            return match;
+        });
+    },
     themeConfig: {
         outline: {
             level: [2, 4],
