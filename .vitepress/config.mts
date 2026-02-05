@@ -1,4 +1,30 @@
 import { defineConfig } from 'vitepress';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+function getSidebarItems(dir: string) {
+    const dirPath = path.resolve(__dirname, '..', dir);
+    if (!fs.existsSync(dirPath)) return [];
+
+    return fs.readdirSync(dirPath)
+        .filter((file: string) => file.endsWith('.md') && file !== 'index.md')
+        .map((file: string) => {
+            const filePath = path.join(dirPath, file);
+            const content = fs.readFileSync(filePath, 'utf-8');
+            // 匹配一级标题 # Title
+            const match = content.match(/^#\s+(.*)/m);
+            const title = match ? match[1].trim() : file.replace(/\.md$/, '');
+            const name = file.replace(/\.md$/, '');
+            return {
+                text: title,
+                link: `/${dir}/${name}`
+            };
+        });
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -85,6 +111,12 @@ export default defineConfig({
         ],
 
         sidebar: {
+            '/blog/': [
+                {
+                    text: '博客文章',
+                    items: getSidebarItems('blog')
+                }
+            ],
         },
 
         socialLinks: [
