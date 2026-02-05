@@ -107,7 +107,7 @@ export default defineConfig({
             { text: '生存', link: '/servers/survival/' },
             { text: '创造', link: '/servers/creative/' },
             { text: '博客', link: '/blog/' },
-            { text: '关于', link: '/about/' },
+            { text: '关于', link: '/about' },
         ],
 
         sidebar: {
