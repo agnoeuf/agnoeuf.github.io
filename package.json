@@ -19,5 +19,8 @@
     "overrides": {
       "esbuild": "0.27.2"
     }
+  },
+  "dependencies": {
+    "rm": "^0.1.8"
   }
 }
