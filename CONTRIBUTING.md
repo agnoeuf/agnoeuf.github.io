@@ -101,31 +101,49 @@ editLink: true
 
 本项目使用 **GitHub Actions** 自动部署到 GitHub Pages。你不需要手动构建。
 
-### 工作流程
+### 1. 提交更改
 
-1.  **提交更改**
-    完成编辑后，提交你的代码：
+完成编辑后，提交你的代码。建议使用规范的提交内容（[Conventional Commits](https://www.conventionalcommits.org/)）：
 
-    ```bash
-    git add .
-    git commit -m "docs: 更新生存服规则"
-    git push
-    ```
+```bash
+git add .
+git commit -m "docs: 更新生存服规则"
+git push
+```
 
-2.  **自动构建**
-    - 推送到 `main` (或 `master`) 分支后，GitHub Actions 会自动触发名为 `gh-pages` 的工作流。
-    - 它会执行 `vitepress build` 并将生成的静态文件部署为 `Github Pages页面` 。
+### 2. 自动构建与发布
 
-3.  **查看结果**
-    - 等待几分钟，访问 GitHub Pages 地址（通常是 `https://wiki.agnoeuf.yumemita.moe/`）查看更新。
-    - 你可以在 GitHub 仓库的 "Actions" 标签页查看构建进度。
+- 推送至 `main` 分支后，GitHub Actions 会自动触发构建流程。
+- 构建成功后，内容会自动同步到 [wiki.agnoeuf.yumemita.moe](https://wiki.agnoeuf.yumemita.moe/)。
+- 你可以在 GitHub 仓库的 **Actions** 标签页查看实时构建进度。
+
+## 📝 协作规范
+
+### 1. 文档样式建议
+
+- **中文排版**: 在中文与英文/数字之间增加空格（例如：`基于 VitePress 构建` 而非 `基于VitePress构建`）。
+- **标题级别**: 页面标题使用一级标题（`#`），各章节按序使用二级及以下标题（`##`, `###`）。
+- **标点符号**: 统一使用全角标点符号（如 `，` `。` `！`），代码块除外。
+
+### 2. 管理侧边栏
+
+若新增了页面或目录，通常需要手动将其添加到 `.vitepress/config.mts` 的 `sidebar` 配置中，否则用户无法从导航栏找到该页面。
+
+### 3. 多人协作 (Pull Request)
+
+如果你没有直接推送权限，或者希望你的更改经过评审后再合并：
+
+1.  **Fork** 本仓库。
+2.  在你的仓库中创建新分支（例如 `feat/survival-update`）。
+3.  发起 **Pull Request (PR)**。
+4.  等待维护者 Review 并合并。
 
 ## ⚠️ 注意事项
 
-- **链接检查**: 提交前请检查内部链接是否正确。
-- **不要提交构建产物**: 不要手动提交 `.vitepress/dist` 目录下的文件（通常这些文件已被.gitignore忽略）。
-- **侧边栏**: 如果添加了新文件，可能需要更新 `.vitepress/config.mts` (或 `.js/.ts`) 中的侧边栏配置以使其显示在导航中。
+- **检查死链**: 提交前请点击本地预览中的链接，确保所有跳转正常。
+- **静态资源**: 图片请尽量压缩后再提交，以保持仓库体积精简。
+- **保持同步**: 在开始工作前，请先 `git pull` 以确保你基于最新的主分支代码进行修改。
 
 ---
 
-感谢你的贡献！
+感谢你为 Agnoeuf Wiki 贡献力量！如果你有任何疑问，欢迎在 GitHub 上发起 Issue。

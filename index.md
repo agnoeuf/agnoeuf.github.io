@@ -15,29 +15,25 @@ hero:
       link: /about
 
 features:
-  - title: 【大厅】1.21.8
-    link: /servers/hub/
+  - title: 群友
+    link: /members
     details: <span class="index-tags">
-      <span class="index-tag">1.21.8</span>
-      <span class="index-tag">多版本支持</span>
-      <span class="index-tag">小游戏</span>
-      <span class="index-tag">服务器中转站</span>
+      <span class="index-tag">-</span>
       </span>
-  - title: 【生存】1.21.8
-    link: /servers/survival/
+  - title: 聚落
+    link: /settlement
     details: <span class="index-tags">
-      <span class="index-tag">1.21.8</span>
-      <span class="index-tag">多版本支持</span>
-      <span class="index-tag">Fabric</span>
-      <span class="index-tag">粘液科技</span>
+      <span class="index-tag">-</span>
       </span>
-  - title: 【创造】1.21.8
-    link: /servers/creative/
+  - title: 事迹
+    link: /events
     details: <span class="index-tags">
-      <span class="index-tag">1.21.8</span>
-      <span class="index-tag">多版本支持</span>
-      <span class="index-tag">建筑</span>
-      <span class="index-tag">观光</span>
+      <span class="index-tag">-</span>
+      </span>
+  - title: 设定集
+    link: /set
+    details: <span class="index-tags">
+      <span class="index-tag">-</span>
       </span>
 ---
 
