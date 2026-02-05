@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
     title: "羊油蛋服务器 Wiki",
     description: "A wiki site for Agnoeuf",
+    ignoreDeadLinks: true,
     themeConfig: {
         outline: {
             level: [2, 4],
