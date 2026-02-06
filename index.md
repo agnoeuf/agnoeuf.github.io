@@ -16,22 +16,22 @@ hero:
 
 features:
   - title: 群友
-    link: /members
+    link: /members/
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
   - title: 聚落
-    link: /settlement
+    link: /settlement/
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
   - title: 事迹
-    link: /events
+    link: /events/
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
   - title: 设定集
-    link: /set
+    link: /set/
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
