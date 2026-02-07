@@ -11,27 +11,27 @@ hero:
       text: 介绍
       link: /intro
     - theme: alt
-      text: 关于我们
-      link: /about
+      text: Wiki
+      link: /wiki
 
 features:
   - title: 群友
-    link: /members/
+    link: /wiki/categories/群友
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
   - title: 聚落
-    link: /settlement/
+    link: /wiki/categories/聚落
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
   - title: 事迹
-    link: /events/
+    link: /wiki/categories/事迹
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>
   - title: 设定集
-    link: /set/
+    link: /wiki/categories/设定集
     details: <span class="index-tags">
       <span class="index-tag">-</span>
       </span>

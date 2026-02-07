@@ -17,6 +17,9 @@ importers:
       rm:
         specifier: ^0.1.8
         version: 0.1.8
+      vue:
+        specifier: ^3.5.27
+        version: 3.5.27
     devDependencies:
       vitepress:
         specifier: ^1.6.4
@@ -811,7 +814,7 @@ packages:
     engines: {node: '>=10'}
 
   estree-walker@2.0.2:
-    resolution: {integrity: sha1-UvAQF4wqTBF6d1fP6UKtt9LaTKw=}
+    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
   find-up@5.0.0:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}

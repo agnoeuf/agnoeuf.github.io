@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createContentLoader } from 'vitepress'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,6 +33,24 @@ export default defineConfig({
     title: "羊油蛋服务器 Wiki",
     description: "A wiki site for Agnoeuf",
     ignoreDeadLinks: true,
+    vite: {
+        plugins: [
+            {
+                name: 'virtual-category-routes',
+                resolveId(id) {
+                    if (id.startsWith('virtual-category-')) {
+                        return id
+                    }
+                },
+                load(id) {
+                    if (id.startsWith('virtual-category-')) {
+                        // 返回虚拟模块内容
+                        return 'export default {}'
+                    }
+                }
+            }
+        ]
+    },
     head: [
         ['style', {}, `
             .dead-link { 
@@ -104,6 +123,47 @@ export default defineConfig({
             return match;
         });
     },
+    buildEnd: async (siteConfig) => {
+        // 动态生成分类详情页
+        const catDir = path.join(__dirname, '..', 'wiki', 'categories')
+
+        // 建立 categories 目录
+        if (!fs.existsSync(catDir)) {
+            fs.mkdirSync(catDir, { recursive: true })
+        }
+
+        // 读取 wiki 数据来获取所有分类
+        const wikiFiles = fs.readdirSync(path.join(__dirname, '..', 'wiki'))
+            .filter(file => file.endsWith('.md') && file !== 'index.md')
+
+        const categories = new Set<string>()
+
+        wikiFiles.forEach(file => {
+            const content = fs.readFileSync(path.join(__dirname, '..', 'wiki', file), 'utf-8')
+            const match = content.match(/categories:\s*\[(.*?)\]/m)
+            if (match) {
+                const cats = match[1].split(',').map(c => c.trim().replace(/['\"\[\]]/g, ''))
+                cats.forEach(cat => categories.add(cat))
+            }
+        })
+
+        // 为每个分类创建一个 markdown 文件
+        categories.forEach(category => {
+            const fileName = `${category}.md`
+            const filePath = path.join(catDir, fileName)
+
+            if (!fs.existsSync(filePath)) {
+                const content = `---
+layout: page
+---
+
+# ${category}
+
+<CategoryList />`
+                fs.writeFileSync(filePath, content, 'utf-8')
+            }
+        })
+    },
     themeConfig: {
         outline: {
             level: [2, 4],
@@ -111,10 +171,10 @@ export default defineConfig({
         // https://vitepress.dev/reference/default-theme-config
         nav: [
             { text: '首页', link: '/' },
-            { text: '生存', link: '/servers/survival/' },
-            { text: '创造', link: '/servers/creative/' },
+            { text: '生存', link: '/wiki/生存服' },
+            { text: '创造', link: '/wiki/创造服' },
             { text: '博客', link: '/blog/' },
-            { text: '关于', link: '/about' },
+            { text: 'Wiki', link: '/wiki' },
         ],
 
         sidebar: {
