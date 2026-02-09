@@ -33,16 +33,24 @@ jobs:
         with:
           fetch-depth: 0 # Not needed if lastUpdated is not enabled
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.17.1 # Match the Node.js version from your original configuration
-          # cache: 'pnpm' # Set cache for pnpm
+          node-version: 20
+          cache: "pnpm"
 
-      - name: Setup pnpm
-        run: |
-          npm install -g pnpm
-          pnpm config set store-dir .pnpm-store
+      - name: Cache VitePress build cache
+        uses: actions/cache@v4
+        with:
+          path: .vitepress/cache
+          key: ${{ runner.os }}-vitepress-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-vitepress-
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -51,7 +59,7 @@ jobs:
         run: pnpm install
 
       - name: Build with VitePress
-        run: pnpm run docs:build # Adjust the build command as needed
+        run: pnpm run docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
