@@ -1,1 +1,23 @@
 /* Custom styles for Agnoeuf Wiki */
+
+.float-right {
+  float: right;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.float-left {
+  float: left;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* 移动端强制取消浮动 */
+@media (max-width: 640px) {
+  .float-right,
+  .float-left {
+    float: none !important;
+    max-width: 100% !important;
+    margin: 1rem 0 !important;
+    display: block;
+  }
+}
