@@ -187,7 +187,8 @@ layout: page
         },
 
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/agnoeuf/agnoeuf.github.io' }
+            { icon: 'github', link: 'https://github.com/agnoeuf/agnoeuf.github.io' },
+            { icon: 'kofi', link: 'https://ko-fi.com/agnoeuf' }
         ],
 
         notFound: {
