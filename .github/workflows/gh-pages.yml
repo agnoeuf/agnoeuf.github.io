@@ -36,13 +36,13 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 10
+          version: latest
           run_install: false
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: latest
           cache: "pnpm"
 
       - name: Cache VitePress build cache
